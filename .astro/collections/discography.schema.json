@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "releaseDate": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "solo",
+        "group",
+        "compilation",
+        "btnth",
+        "collab"
+      ]
+    },
+    "coverImage": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "quote": {
+      "type": "string"
+    },
+    "quoteSong": {
+      "type": "string"
+    },
+    "buyLink": {
+      "type": "string"
+    },
+    "buyLinkType": {
+      "type": "string",
+      "enum": [
+        "official",
+        "amazon",
+        "discogs",
+        "ebay"
+      ]
+    },
+    "featured": {
+      "default": false,
+      "type": "boolean"
+    },
+    "chartPeak": {
+      "type": "string"
+    },
+    "certification": {
+      "type": "string"
+    },
+    "tracks": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "spotifyId": {
+            "type": "string"
+          },
+          "disc": {
+            "type": "number"
+          },
+          "discTitle": {
+            "type": "string"
+          },
+          "producer": {
+            "type": "string"
+          },
+          "featuring": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "number",
+          "title"
+        ]
+      }
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "releaseDate",
+    "label",
+    "type",
+    "description"
+  ]
+}

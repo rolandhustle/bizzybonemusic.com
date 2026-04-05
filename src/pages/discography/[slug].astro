@@ -1,0 +1,313 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Tracklist from '../../components/Tracklist.astro';
+
+export async function getStaticPaths() {
+  const albums = await getCollection('discography');
+  const sorted = [...albums].sort((a, b) => a.data.releaseDate.localeCompare(b.data.releaseDate));
+
+  return sorted.map((album, i) => ({
+    params: { slug: album.id },
+    props: {
+      album,
+      prev: sorted[i - 1] || null,
+      next: sorted[i + 1] || null,
+    },
+  }));
+}
+
+interface Props {
+  album: CollectionEntry<'discography'>;
+  prev: CollectionEntry<'discography'> | null;
+  next: CollectionEntry<'discography'> | null;
+}
+
+const { album, prev, next } = Astro.props;
+const { data } = album;
+const year = data.releaseDate.split('-')[0];
+const metaDescription = data.description.length > 155
+  ? data.description.slice(0, 155).trimEnd() + '…'
+  : data.description;
+const ogImage = data.coverImage
+  ? `https://bizzybonemusic.com/covers/${data.coverImage}`
+  : 'https://bizzybonemusic.com/bizzy_bone_header.jpg';
+
+const albumJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicAlbum",
+  "name": data.title,
+  "datePublished": data.releaseDate,
+  "description": data.description,
+  "recordLabel": data.label,
+  ...(data.coverImage && { "image": `https://bizzybonemusic.com/covers/${data.coverImage}` }),
+  "numTracks": data.tracks.length,
+  "byArtist": {
+    "@type": "Person",
+    "name": "Bizzy Bone",
+    "birthName": "Bryon Anthony McCane II",
+    "birthDate": "1976-09-12",
+    "birthPlace": "Cleveland, Ohio"
+  }
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Discography", "item": "https://bizzybonemusic.com" },
+    { "@type": "ListItem", "position": 2, "name": data.title, "item": `https://bizzybonemusic.com/discography/${album.id}` }
+  ]
+};
+---
+
+<Base
+  title={`${data.title} by Bizzy Bone (${year}) — Full Info & Where to Buy`}
+  description={metaDescription}
+  ogImage={ogImage}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(albumJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+  </Fragment>
+
+  <div style="min-height:100vh;background:#0f0f0f;">
+    <Nav />
+
+    <main style="max-width:1200px;margin:0 auto;padding:64px 48px 80px;">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="/">Home</a>
+        <span>→</span>
+        <a href="/#discography">Discography</a>
+        <span>→</span>
+        <span style="color:#777;">{data.title}</span>
+      </nav>
+
+      <!-- Main content -->
+      <div class="album-layout">
+        <!-- Cover image -->
+        <div class="cover-col">
+          {data.coverImage ? (
+            <img
+              src={`/covers/${data.coverImage}`}
+              alt={`${data.title} cover`}
+              class="album-cover"
+            />
+          ) : (
+            <div class="cover-placeholder"></div>
+          )}
+        </div>
+
+        <!-- Details -->
+        <div class="details-col">
+          <h1 class="album-title">{data.title}</h1>
+          <p class="release-info">{year} · {data.label}</p>
+
+          {data.certification && (
+            <span class="badge">{data.certification}</span>
+          )}
+
+          {data.chartPeak && (
+            <p class="chart-peak">{data.chartPeak}</p>
+          )}
+
+          <p class="description">{data.description}</p>
+
+          {data.quote && (
+            <blockquote class="pull-quote">
+              <p>"{data.quote}"</p>
+              {data.quoteSong && <cite>— {data.quoteSong}</cite>}
+            </blockquote>
+          )}
+
+          {data.tracks && data.tracks.length > 0 && (
+            <Tracklist tracks={data.tracks} />
+          )}
+
+          {data.buyLink && (
+            <a href={data.buyLink} target="_blank" rel="noopener noreferrer" class="buy-btn">
+              {data.buyLinkType === 'official' && 'Buy from artist →'}
+              {data.buyLinkType === 'amazon' && 'Buy on Amazon →'}
+              {data.buyLinkType === 'discogs' && 'Find on Discogs →'}
+              {data.buyLinkType === 'ebay' && 'Find on eBay →'}
+              {!data.buyLinkType && 'Buy / Stream →'}
+            </a>
+          )}
+        </div>
+      </div>
+
+      <!-- Prev / Next -->
+      <div class="prev-next">
+        {prev ? (
+          <a href={`/discography/${prev.id}`} class="nav-link-prev">
+            ← {prev.data.title}
+          </a>
+        ) : <div />}
+        {next ? (
+          <a href={`/discography/${next.id}`} class="nav-link-next">
+            {next.data.title} →
+          </a>
+        ) : <div />}
+      </div>
+    </main>
+  </div>
+</Base>
+
+<style>
+  .breadcrumb {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #555;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 48px;
+  }
+  .breadcrumb a {
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .breadcrumb a:hover {
+    color: #c9a962;
+  }
+
+  .album-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .cover-col {}
+
+  .album-cover {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cover-placeholder {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 1 / 1;
+    background: #181818;
+  }
+
+  .details-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .album-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    color: #fff;
+    margin: 0;
+    line-height: 1.05;
+  }
+
+  .release-info {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #555;
+    margin: 0;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #c9a962;
+    border: 0.5px solid #c9a962;
+    padding: 4px 12px;
+  }
+
+  .chart-peak {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #555;
+    margin: 0;
+  }
+
+  .description {
+    font-size: 15px;
+    color: #888;
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .pull-quote {
+    border-left: 2px solid #c9a962;
+    padding-left: 16px;
+    margin: 0;
+  }
+  .pull-quote p {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    color: #777;
+    margin: 0 0 8px 0;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .pull-quote cite {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #555;
+    font-style: normal;
+  }
+
+  .buy-btn {
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: #c9a962;
+    border: 0.5px solid #c9a962;
+    padding: 8px 24px;
+    text-decoration: none;
+    transition: all 0.2s;
+    align-self: flex-start;
+  }
+  .buy-btn:hover {
+    background: #c9a962;
+    color: #000;
+  }
+
+  .prev-next {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 0.5px solid #1a1a1a;
+  }
+  .nav-link-prev,
+  .nav-link-next {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-link-prev:hover,
+  .nav-link-next:hover {
+    color: #c9a962;
+  }
+
+  @media (max-width: 767px) {
+    .album-layout {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    main {
+      padding: 24px 24px 60px !important;
+    }
+  }
+</style>

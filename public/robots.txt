@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bizzybonemusic.vercel.app/sitemap-index.xml

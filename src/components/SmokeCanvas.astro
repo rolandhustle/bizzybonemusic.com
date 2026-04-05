@@ -1,0 +1,127 @@
+---
+---
+<canvas id="smoke-canvas" aria-hidden="true"></canvas>
+
+<style>
+  #smoke-canvas {
+    position: absolute;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 5;
+  }
+  @media (max-width: 767px) {
+    #smoke-canvas { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #smoke-canvas { display: none; }
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('smoke-canvas') as HTMLCanvasElement;
+  if (!canvas || window.innerWidth < 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // nothing
+  } else {
+    const ctx = canvas.getContext('2d')!;
+    const parent = canvas.parentElement!;
+    const img = parent.querySelector('img') as HTMLImageElement;
+
+    interface Particle {
+      x: number; y: number;
+      radius: number;
+      vx: number; vy: number;
+      life: number; maxLife: number;
+      phase: number;
+    }
+
+    const particles: Particle[] = [];
+    const PARTICLE_COUNT = 30;
+
+    function alignCanvas() {
+      const parentRect = parent.getBoundingClientRect();
+      const imgRect = img.getBoundingClientRect();
+      const top    = imgRect.top    - parentRect.top;
+      const left   = imgRect.left   - parentRect.left;
+      const width  = imgRect.width;
+      const height = imgRect.height;
+
+      canvas.style.top    = top    + 'px';
+      canvas.style.left   = left   + 'px';
+      canvas.style.width  = width  + 'px';
+      canvas.style.height = height + 'px';
+      canvas.width  = Math.round(width);
+      canvas.height = Math.round(height);
+    }
+
+    function createParticle(): Particle {
+      const maxLife = 200 + Math.random() * 150;
+      return {
+        x: canvas.width  * 0.35 + (Math.random() - 0.5) * 60,
+        y: canvas.height * 0.45 + (Math.random() - 0.5) * 40,
+        radius: 18 + Math.random() * 42,
+        vx: 0.1 + Math.random() * 0.3,
+        vy: -(0.3 + Math.random() * 0.5),
+        life: 0,
+        maxLife,
+        phase: Math.random() * Math.PI * 2,
+      };
+    }
+
+    function initParticles() {
+      particles.length = 0;
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const p = createParticle();
+        p.life = Math.random() * p.maxLife;
+        particles.push(p);
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const p of particles) {
+        const progress = p.life / p.maxLife;
+        let alpha: number;
+        if (progress < 0.3)       alpha = (progress / 0.3) * 0.15;
+        else if (progress < 0.7)  alpha = 0.15;
+        else                      alpha = ((1 - progress) / 0.3) * 0.15;
+
+        const wobble = Math.sin(p.phase + p.life * 0.02) * 30;
+        const dx = p.x + wobble;
+        const dy = p.y;
+
+        const grad = ctx.createRadialGradient(dx, dy, 0, dx, dy, p.radius);
+        grad.addColorStop(0, `rgba(200,190,170,${alpha})`);
+        grad.addColorStop(1, `rgba(200,190,170,0)`);
+        ctx.beginPath();
+        ctx.arc(dx, dy, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        p.life += 1;
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.life >= p.maxLife) Object.assign(p, createParticle());
+      }
+      requestAnimationFrame(draw);
+    }
+
+    function setup() {
+      alignCanvas();
+      initParticles();
+    }
+
+    // Wait for image to load before aligning
+    if (img.complete && img.naturalWidth > 0) {
+      setup();
+    } else {
+      img.addEventListener('load', setup, { once: true });
+    }
+
+    window.addEventListener('resize', () => {
+      alignCanvas();
+      initParticles();
+    });
+
+    draw();
+  }
+</script>

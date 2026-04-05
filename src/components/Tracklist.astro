@@ -1,0 +1,231 @@
+---
+interface Track {
+  number: number;
+  title: string;
+  spotifyId?: string;
+  disc?: number;
+  discTitle?: string;
+  producer?: string;
+  featuring?: string;
+}
+interface Props {
+  tracks: Track[];
+}
+const { tracks } = Astro.props;
+---
+
+<div class="tracklist">
+  {tracks.map((track, i) => (
+    <Fragment>
+      {track.disc !== undefined && (i === 0 || tracks[i - 1].disc !== track.disc) && (
+        <div class="disc-header">
+          <span>{track.discTitle ?? `CD ${track.disc}`}</span>
+        </div>
+      )}
+      <div
+        class={`track-row ${track.spotifyId ? 'has-preview' : 'no-preview'}`}
+        data-spotify-id={track.spotifyId || ''}
+      >
+        <span class="track-num">{String(track.number).padStart(2, '0')}</span>
+        <span class="track-title">
+          {track.title}
+          {track.producer && <span class="track-meta">produced by {track.producer}</span>}
+          {track.featuring && <span class="track-meta">feat. {track.featuring}</span>}
+        </span>
+        <span class="track-action">
+          {track.spotifyId ? (
+            <span class="play-icon" aria-label="Play preview">▷</span>
+          ) : (
+            <span class="no-play">—</span>
+          )}
+        </span>
+      </div>
+    </Fragment>
+  ))}
+</div>
+
+<div id="spotify-preview-container" style="display:none;">
+  <iframe
+    id="spotify-iframe"
+    style="border-radius:4px;display:block;"
+    src=""
+    width="100%"
+    height="152"
+    frameborder="0"
+    allowfullscreen=""
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy"
+  ></iframe>
+  <button id="close-preview" aria-label="Close preview">✕ Close preview</button>
+</div>
+
+<style>
+  .tracklist {
+    margin: 32px 0 24px;
+    border-top: 0.5px solid #1e1e1e;
+  }
+
+  .track-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 0.5px solid #1a1a1a;
+    transition: background 0.15s;
+  }
+
+  .track-row.has-preview {
+    cursor: pointer;
+  }
+
+  .track-row.has-preview:hover {
+    background: #161616;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 0 -8px;
+  }
+
+  .track-row.active {
+    background: #1a1a0e;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 0 -8px;
+  }
+
+  .track-num {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #c9a962;
+    letter-spacing: 0.08em;
+    min-width: 24px;
+    flex-shrink: 0;
+  }
+
+  .track-title {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+    color: #e0e0e0;
+    flex: 1;
+  }
+
+  .track-row.no-preview .track-title {
+    color: #555;
+  }
+
+  .track-meta {
+    display: block;
+    font-size: 10px;
+    color: #444;
+    letter-spacing: 0.08em;
+    margin-top: 0;
+    line-height: 1.6;
+    font-style: normal;
+    font-family: 'Courier New', monospace;
+  }
+
+  .track-meta:first-of-type {
+    margin-top: 3px;
+  }
+
+  .track-action {
+    flex-shrink: 0;
+    width: 20px;
+    text-align: right;
+  }
+
+  .play-icon {
+    font-size: 12px;
+    color: #c9a962;
+    opacity: 0.6;
+    transition: opacity 0.15s;
+  }
+
+  .track-row.has-preview:hover .play-icon {
+    opacity: 1;
+  }
+
+  .track-row.active .play-icon {
+    color: #c9a962;
+    opacity: 1;
+  }
+
+  .no-play {
+    font-size: 12px;
+    color: #333;
+  }
+
+  .disc-header {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #c9a962;
+    padding: 20px 0 8px;
+    border-bottom: 0.5px solid #2a2a1a;
+    margin-bottom: 4px;
+  }
+
+  #spotify-preview-container {
+    margin: 16px 0;
+    padding: 16px;
+    background: #111;
+    border: 0.5px solid #1e1e1e;
+  }
+
+  #close-preview {
+    margin-top: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: #555;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s;
+  }
+
+  #close-preview:hover {
+    color: #c9a962;
+  }
+</style>
+
+<script>
+  const rows = document.querySelectorAll('.track-row.has-preview');
+  const container = document.getElementById('spotify-preview-container');
+  const iframe = document.getElementById('spotify-iframe') as HTMLIFrameElement;
+  const closeBtn = document.getElementById('close-preview');
+  let activeRow: Element | null = null;
+
+  rows.forEach(row => {
+    row.addEventListener('click', () => {
+      const spotifyId = row.getAttribute('data-spotify-id');
+      if (!spotifyId) return;
+
+      if (activeRow === row) {
+        container!.style.display = 'none';
+        iframe.src = '';
+        row.classList.remove('active');
+        activeRow = null;
+        return;
+      }
+
+      if (activeRow) activeRow.classList.remove('active');
+      row.classList.add('active');
+      activeRow = row;
+
+      iframe.src = `https://open.spotify.com/embed/track/${spotifyId}?utm_source=generator&theme=0&autoplay=1`;
+      container!.style.display = 'block';
+
+      row.after(container!);
+    });
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    container!.style.display = 'none';
+    iframe.src = '';
+    if (activeRow) activeRow.classList.remove('active');
+    activeRow = null;
+  });
+</script>

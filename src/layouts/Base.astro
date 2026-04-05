@@ -1,0 +1,53 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonicalURL?: string;
+  ogImage?: string;
+}
+
+const { title, description, canonicalURL = Astro.url.href, ogImage = 'https://bizzybonemusic.com/bizzy_bone_header.jpg' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Bizzy Bone",
+      "alternateName": ["Bryon Anthony McCane II", "BB Gambini", "Lil Ripsta"],
+      "birthDate": "1976-09-12",
+      "birthPlace": "Columbus, Ohio, USA",
+      "url": "https://bizzybonemusic.com",
+      "sameAs": [
+        "https://en.wikipedia.org/wiki/Bizzy_Bone",
+        "https://open.spotify.com/artist/23xTTTcfVHvWRIPiDAOAE4",
+        "https://iambizzybone.com"
+      ]
+    })} />
+
+    <slot name="head" />
+  </head>
+  <body style="background:#0f0f0f;color:#e0e0e0;margin:0;padding:0;font-family:Arial,system-ui,sans-serif;">
+    <slot />
+  </body>
+</html>

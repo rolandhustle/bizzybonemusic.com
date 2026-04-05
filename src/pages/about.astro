@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<Base
+  title="About Bizzy Bone — Rapper, Songwriter, Bone Thugs-N-Harmony"
+  description="Learn about Bizzy Bone, born Bryon Anthony McCane II on September 12, 1976 in Cleveland, Ohio. Member of Bone Thugs-N-Harmony and acclaimed solo artist."
+>
+  <div style="min-height:100vh;background:#0f0f0f;">
+    <Nav />
+
+    <main style="max-width:720px;margin:0 auto;padding:64px 48px 80px;">
+      <h1 class="page-title">About Bizzy Bone</h1>
+
+      <p class="bio">
+        Born Bryon Anthony McCane II on September 12, 1976, in Columbus, Ohio, Bizzy Bone is a Grammy-winning rapper, singer, and songwriter whose art has been forged by extraordinary adversity. At age four, he and his two sisters were kidnapped by their stepfather and held captive for nearly two years, moved through shelters, motels, and cars across multiple states before settling on a Native American reservation in Oklahoma. During captivity, he endured physical and sexual abuse. He was rescued in 1983 after a neighbor recognized his photo from a national missing-children broadcast. Placed in foster care and drawn into Cleveland's streets by his early teens, he found salvation in words, and eventually told the full story of his childhood in his autobiography, <em>Inside a Bizzy Mind</em>.
+      </p>
+
+      <p class="bio">
+        In 1991, Bizzy joined Bone Thugs-N-Harmony in Cleveland, and the group soon traveled to Los Angeles to audition for Eazy-E, who signed them to Ruthless Records. Their 1995 album <em>E. 1999 Eternal</em> debuted at number one on the Billboard 200, and its single "Tha Crossroads" held the top spot on the Billboard Hot 100 for eight consecutive weeks, earning the group a Grammy Award. The group has sold over sixteen million records worldwide. Bone Thugs-N-Harmony are unique in hip-hop history, they are the only act to have recorded with all three of the genre's most iconic figures: Eazy-E, 2Pac, and The Notorious B.I.G.
+      </p>
+
+      <p class="bio">
+        Bizzy is recognized as a pioneer of chopper-style rap, a rapid-fire, double-time delivery fused with melodic harmonizing to create something wholly his own. Music analysts have described his flow as imagining musical time like a malleable piece of clay, layering vocal textures and shifting rhythmic frameworks mid-verse. But the technique is only part of the story. Bizzy is above all a wordsmith, a poet working in a rapper's body. His lyrics carry a raw, confessional weight that goes beyond technical showmanship: dense internal rhyme schemes, unexpected imagery, and a gift for conveying spiritual yearning, street-hardened defiance, and emotional vulnerability within the same breath. His writing draws on deep religious conviction and a restless inner life, giving even his most rapid-fire verses a meditative quality that rewards close listening.
+      </p>
+
+      <p class="bio">
+        That quality extends to his freestyle work, where Bizzy has long held a reputation as a genuinely formidable off-the-cuff rapper, capable of matching the same lyrical density and emotional range in improvised settings that he brings to recorded material. As a solo artist, Bizzy has released over twenty studio albums spanning gospel-inflected spirituality, raw confessional storytelling, street rap, and experimental production. His solo debut <em>Heaven'z Movie</em> (1998) was certified Gold and debuted at number three on the Billboard 200. Artists from Kendrick Lamar to Drake to Tech N9ne have cited Bone Thugs as foundational influences, with Chicago rapper Saba specifically crediting Bizzy's verse on "Notorious Thugz" as the moment that made him want to rap.
+      </p>
+
+      <p class="bio">
+        Three decades into his career, Bizzy Bone remains one of hip-hop's most singular, prolific, and deeply human voices, an artist whose best work reads as much like poetry as it does rap, and whose life story is as remarkable as anything he has ever put to record.
+      </p>
+
+      <p class="site-credit">This site was created by <a href="https://rikardgiby-cv.vercel.app" target="_blank" rel="noopener noreferrer">Rikard Giby</a> as an independent project.</p>
+    </main>
+  </div>
+</Base>
+
+<style>
+  .page-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0 0 48px;
+    line-height: 1.1;
+  }
+
+  .bio {
+    font-size: 15px;
+    color: #888;
+    line-height: 1.8;
+    margin: 0 0 28px;
+  }
+
+  .bio em {
+    font-style: italic;
+    color: #aaa;
+  }
+
+  .site-credit {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: #444;
+    margin-top: 56px;
+  }
+
+  .site-credit a {
+    color: #444;
+    text-decoration: none;
+    border-bottom: 0.5px solid #444;
+  }
+
+  .site-credit a:hover {
+    color: #888;
+    border-bottom-color: #888;
+  }
+
+  @media (max-width: 767px) {
+    main {
+      padding: 40px 24px 60px !important;
+    }
+  }
+</style>

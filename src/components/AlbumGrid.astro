@@ -1,0 +1,153 @@
+---
+import AlbumCard from './AlbumCard.astro';
+import FilterPills from './FilterPills.astro';
+
+interface Album {
+  slug: string;
+  data: {
+    title: string;
+    releaseDate: string;
+    label: string;
+    type: 'solo' | 'btnth' | 'collab';
+    coverImage?: string;
+    featured?: boolean;
+  };
+}
+
+interface Props {
+  albums: Album[];
+}
+
+const { albums } = Astro.props;
+const sorted = [...albums].sort((a, b) => a.data.releaseDate.localeCompare(b.data.releaseDate));
+---
+
+<section id="discography">
+  <div class="grid-wrap">
+    <div class="grid-header">
+      <p class="section-label">Complete Discography</p>
+      <FilterPills />
+    </div>
+    <div class="album-grid">
+      {sorted.map((album) => (
+        <div
+          class="album-wrap"
+          data-featured={album.data.featured ? 'true' : 'false'}
+          data-type={album.data.type}
+          style={album.data.featured ? '' : 'display:none'}
+        >
+          <AlbumCard
+            title={album.data.title}
+            slug={album.id}
+            releaseDate={album.data.releaseDate}
+            label={album.data.label}
+            type={album.data.type}
+            coverImage={album.data.coverImage}
+            featured={album.data.featured}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const pills = document.querySelectorAll<HTMLButtonElement>('#filter-pills .pill');
+  const cards = document.querySelectorAll<HTMLElement>('.album-wrap');
+
+  function applyFilter(filter: string) {
+    // Update active pill
+    pills.forEach(p => p.classList.toggle('active', p.dataset.filter === filter));
+
+    // Show/hide cards
+    cards.forEach(card => {
+      let visible = false;
+      if (filter === 'featured') {
+        visible = card.dataset.featured === 'true';
+      } else if (filter === 'all') {
+        visible = true;
+      } else {
+        visible = card.dataset.type === filter;
+      }
+      card.style.display = visible ? '' : 'none';
+    });
+
+    // Sync URL param
+    const url = new URL(window.location.href);
+    if (filter === 'featured') {
+      url.searchParams.delete('type');
+    } else {
+      url.searchParams.set('type', filter);
+    }
+    window.history.replaceState({}, '', url.toString());
+  }
+
+  // On load: read URL param, default to 'featured'.
+  // If param is 'featured' or absent, server already rendered correctly —
+  // just mark the active pill without touching the DOM.
+  const initialFilter = new URLSearchParams(window.location.search).get('type') || 'featured';
+  if (initialFilter === 'featured') {
+    pills.forEach(p => p.classList.toggle('active', p.dataset.filter === 'featured'));
+  } else {
+    applyFilter(initialFilter);
+  }
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => applyFilter(pill.dataset.filter || 'featured'));
+  });
+</script>
+
+<style>
+  section {
+    width: 100%;
+    padding: 64px 0;
+    box-sizing: border-box;
+  }
+
+  .grid-wrap {
+    width: 100%;
+    padding: 0 32px;
+    box-sizing: border-box;
+  }
+
+  .grid-header {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: #444;
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 0.5px solid #1a1a1a;
+    border-left: 0.5px solid #1a1a1a;
+    width: 100%;
+  }
+
+
+  @media (max-width: 1024px) {
+    .album-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .album-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    section {
+      padding: 40px 0;
+    }
+    .grid-wrap {
+      padding: 0 16px;
+    }
+  }
+</style>

@@ -1,0 +1,39 @@
+---
+---
+<div class="filter-wrap" id="filter-pills">
+  <button class="pill" data-filter="featured">Essential</button>
+  <button class="pill" data-filter="all">View All</button>
+  <button class="pill" data-filter="solo">Solo</button>
+  <button class="pill" data-filter="btnth">Bone Thugs-N-Harmony</button>
+  <button class="pill" data-filter="collab">Collaborations</button>
+</div>
+
+<style>
+  .filter-wrap {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .pill {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #555;
+    border: 0.5px solid #333;
+    background: transparent;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .pill:hover {
+    color: #e0e0e0;
+    border-color: #555;
+  }
+  .pill.active {
+    color: #e0e0e0;
+    border-color: #555;
+    background: #1e1e1e;
+  }
+</style>

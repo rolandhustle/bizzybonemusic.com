@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<Base
+  title="Stream & Buy Bizzy Bone Music — Official Links"
+  description="Official links, streaming, and where to buy Bizzy Bone music."
+>
+  <div style="min-height:100vh;background:#0f0f0f;">
+    <Nav />
+
+    <main style="max-width:720px;margin:0 auto;padding:64px 48px 80px;">
+      <h1 class="page-title">Links</h1>
+
+      <section class="link-section">
+        <h2 class="section-title">Bizzy Bone</h2>
+        <div class="store-list">
+          <div class="store-item">
+            <a href="https://iambizzybone.com" target="_blank" rel="noopener noreferrer" class="store-link">
+              iambizzybone.com <span class="arrow">→</span>
+            </a>
+            <p class="store-desc">Official Website</p>
+          </div>
+          <div class="store-item">
+            <a href="https://open.spotify.com/artist/23xTTTcfVHvWRIPiDAOAE4" target="_blank" rel="noopener noreferrer" class="store-link">
+              Spotify <span class="arrow">→</span>
+            </a>
+            <p class="store-desc">Stream on Spotify</p>
+          </div>
+          <div class="store-item">
+            <a href="https://en.wikipedia.org/wiki/Bizzy_Bone" target="_blank" rel="noopener noreferrer" class="store-link">
+              Wikipedia <span class="arrow">→</span>
+            </a>
+            <p class="store-desc">Full biography on Wikipedia</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="link-section">
+        <h2 class="section-title">Buy Music</h2>
+        <div class="store-list">
+          <div class="store-item">
+            <a href="https://iambizzybone.com" target="_blank" rel="noopener noreferrer" class="store-link">
+              Official Store <span class="arrow">→</span>
+            </a>
+            <p class="store-desc">Direct from the artist. New releases, merch, and exclusive drops.</p>
+          </div>
+          <div class="store-item">
+            <a href="https://www.amazon.com" target="_blank" rel="nofollow noopener noreferrer" class="store-link">
+              Amazon <span class="arrow">→</span>
+            </a>
+            <p class="store-desc">New and used CDs, digital downloads, and Prime shipping on most titles.</p>
+          </div>
+          <div class="store-item">
+            <a href="https://www.discogs.com" target="_blank" rel="nofollow noopener noreferrer" class="store-link">
+              Discogs <span class="arrow">→</span>
+            </a>
+            <p class="store-desc">Vinyl, rare pressings, and collector copies from sellers worldwide.</p>
+          </div>
+          <div class="store-item">
+            <a href="https://www.ebay.com" target="_blank" rel="nofollow noopener noreferrer" class="store-link">
+              eBay <span class="arrow">→</span>
+            </a>
+            <p class="store-desc">Auction and buy-it-now listings for hard-to-find and out-of-print releases.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</Base>
+
+<style>
+  .page-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0 0 48px;
+    line-height: 1.1;
+  }
+
+  .link-section {
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #444;
+    margin: 0 0 0;
+  }
+
+  .store-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .store-item {
+    padding: 16px 0;
+    border-bottom: 0.5px solid #1a1a1a;
+  }
+
+  .store-item:first-child {
+    border-top: 0.5px solid #1a1a1a;
+    margin-top: 20px;
+  }
+
+  .store-link {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .store-link:hover {
+    color: #c9a962;
+  }
+
+  .arrow {
+    font-size: 11px;
+  }
+
+  .store-desc {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.6;
+    margin: 8px 0 0;
+  }
+
+  @media (max-width: 767px) {
+    main {
+      padding: 40px 24px 60px !important;
+    }
+  }
+</style>
