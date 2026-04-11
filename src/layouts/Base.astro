@@ -4,9 +4,10 @@ interface Props {
   description: string;
   canonicalURL?: string;
   ogImage?: string;
+  suppressSuffix?: boolean;
 }
 
-const { title, description, canonicalURL = Astro.url.href, ogImage = 'https://bizzybonemusic.com/bizzy_bone_header.jpg' } = Astro.props;
+const { title, description, canonicalURL = Astro.url.href, ogImage = 'https://bizzybonemusic.com/bizzy_bone_header.jpg', suppressSuffix = false } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +21,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
+    <title>{suppressSuffix ? title : `${title} | Bizzy Bone Music`}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
