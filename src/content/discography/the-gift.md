@@ -5,7 +5,7 @@ releaseDate: "2001-03-20"
 label: "AMC Records"
 type: "solo"
 featured: true
-coverImage: "the-gift.jpg"
+coverImage: "the-gift.webp"
 description: "Considered by many fans to be Bizzy's finest solo work. A deeply confessional album covering childhood trauma, the loss of Eazy-E and spiritual identity. Peaked at #44 on Billboard 200 and #2 on Independent Albums. The track “Fried Day,” which was also featured on the Next Friday soundtrack, is Bizzy Bone’s most-streamed song on Spotify, with over 20 million streams."
 quote: "Cleveland, the city we come from, Redrum, And murda mo I can feel some."
 quoteSong: "Never Grow"

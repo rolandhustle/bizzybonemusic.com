@@ -5,7 +5,7 @@ releaseDate: "1995-07-25"
 label: "Ruthless Records"
 type: "btnth"
 featured: true
-coverImage: "e-1999-eternal.jpg"
+coverImage: "e-1999-eternal.webp"
 description: "Four months after losing their mentor Eazy-E to AIDS, Bone Thugs-n-Harmony returned with an album that would define them forever. Dedicated to his memory, E. 1999 Eternal debuted at number one on the Billboard 200, sold over four million copies in the United States, and spawned “Tha Crossroads“, one of the most emotionally charged singles in hip-hop history. Produced entirely by DJ U-Neek, whose dark, smoked-out G-funk beats and brooding synth melodies provided the perfect canvas, the album captured the group at their most focused and cohesive. Critics praised their lightning-fast melodic flows delivered in near-perfect unison, a sound that bordered on singing without ever losing its street-hardened edge. Easily one of the most significant rap albums of the 1990s."
 quote: "Runnin' through the alley and into the mêlée, Up on the second the sundown, Those run from January, November, December, I'm lovin' the first of the month."
 quoteSong: "1st of Tha Month"

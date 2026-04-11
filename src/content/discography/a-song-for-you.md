@@ -5,7 +5,7 @@ releaseDate: "2008-10-07"
 label: "After Platinum Records"
 type: "solo"
 featured: true
-coverImage: "a-song-for-you.jpg"
+coverImage: "a-song-for-you.webp"
 description: "Bizzy Bone's major label comeback through After Platinum Records, distributed via Virgin Records. Heralded by critics as his best album in years, featuring appearances from DMX, Joel Madden of Good Charlotte, Jim Jones, and Twista. A mature and polished effort that showcased Bizzy's versatility across genres."
 quote: "And when I feel so dam dirty dirty, By leaning on a leer jet, Baby ain't here yet, Henny, Caffeine, & nicotine, Notice I left out the green."
 quoteSong: "A Song for You"

@@ -5,7 +5,7 @@ releaseDate: "1997-07-29"
 label: "Ruthless Records"
 type: "btnth"
 featured: true
-coverImage: "the-art-of-war.jpg"
+coverImage: "the-art-of-war.webp"
 description: "Bone Thugs-n-Harmony's most ambitious statement, this sprawling double album debuted at number one on the Billboard 200 and was certified four times platinum by the RIAA. Produced entirely by DJ U-Neek, it arrived at a turbulent moment, with Bizzy Bone's personal struggles keeping him away from much of the promotion, while new Ruthless Records leadership Tomica Wright reshaped several tracks against the group's wishes. Yet the album delivered, anchored by 'Look into My Eyes,' which peaked at number four on the Billboard Hot 100, and a posthumous collaboration with 2Pac on 'Thug Luv,' a verse Bizzy confirmed Pac wrote in under two minutes. Krayzie Bone has since called it the group's finest work, crediting the entirely fresh, studio-born material as what sets it apart from its legendary predecessor."
 quote: "I shedded my last tear when I found out love was a lie."
 quoteSong: "7th Sign"

@@ -5,7 +5,7 @@ releaseDate: "2000-02-29"
 label: "Ruthless Records"
 type: "btnth"
 featured: true
-coverImage: "btnhresurrection.jpg"
+coverImage: "btnhresurrection.webp"
 description: "The fourth studio album by Bone Thugs-N-Harmony, debuting at #2 on the Billboard 200 (#1 R&B) and quickly went Platinum. Notably features Flesh-n-Bone on 14 of 15 tracks, his last appearance before a decade-long prison sentence. Production was handled by DJ U-Neek, L.T. Hutton, Jimmy Thomas and Darren Vegas. A darker, more introspective record that marked the group's return after a three-year gap."
 quote: "Move faster and then ask 'em about the state of men and help the matter, Brace yourself, I can't tell if I'm in peril."
 quoteSong: "The Righteous Ones"

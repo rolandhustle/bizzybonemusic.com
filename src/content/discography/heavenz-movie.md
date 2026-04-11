@@ -5,7 +5,7 @@ releaseDate: "1998-10-06"
 label: "Ruthless Records"
 type: "solo"
 featured: true
-coverImage: "heavenz-movie.jpg"
+coverImage: "heavenz-movie.webp"
 description: "Bizzy Bone's solo debut exploded onto the charts at #3 on the Billboard 200, selling 130,000 copies in its first week. A raw, eclectic take on Bone Thugs-N-Harmony's R&B-laced rap formula with deep autobiography and fire-and-brimstone spirituality. The album includes some of Bizzy Bone's most iconic tracks to date, including “Thugs Cry“ and “Nobody Can Stop Me“, while other tracks “Marchin' on Washington“, “Roll Call“, “Yes Yes Y'all“ and “Brain on Drugs“ were cut short due to sample clearances not being made on time. Produced in part by Bizzy himself under the alias B.B. Gambini, alongside Johnny 'J'. Certified Gold by the RIAA."
 quote: "Talk to the walkin' dead, crossroads, call on the Rev., lost souls."
 quoteSong: "Demons Surround Me"

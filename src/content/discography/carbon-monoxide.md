@@ -5,7 +5,7 @@ releaseDate: "2019-09-12"
 label: "Self-released"
 type: "solo"
 featured: true
-coverImage: "carbon-monoxide.jpg"
+coverImage: "carbon-monoxide.webp"
 description: "The first release in Bizzy's annual September 12 birthday tradition. Widely regarded by fans as a genuine late-career highlight, this album marked a creative resurgence that many had stopped expecting. Produced entirely by Blais, whose beats fuse classic 90s Midwest atmospherics with something distinctly contemporary, it showcases Bizzy at his most focused and lyrically sharp in years. The album carries a confrontational edge rooted in a very real beef: after Migos publicly claimed to be the greatest group of all time, Bizzy took it personally and the title track became a direct response, delivering the kind of complex, aggressive lyricism that defined his peak years. That combative energy ripples through much of the album, giving it an urgency that sets it apart from his more introspective work. A limited Gold Edition of 1,000 signed copies was pressed, bundled with a t-shirt and poster Discogs, making it one of the more collectible items in his catalog."
 quote: "B-G, I'm a knockie fan, I hit you wit' one of these combinations, Have you goin’ through complications, And then I do my Tekashi dance."
 quoteSong: "Carbon Monoxide (Shmurda)"
