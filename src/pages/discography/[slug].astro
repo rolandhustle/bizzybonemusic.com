@@ -157,7 +157,7 @@ const breadcrumbJsonLd = {
   {album.id === 'the-wonder-years' && (
     <div id="ufo-overlay">
       <img id="ufo-ship" src="/ufo.png" alt="" aria-hidden="true" />
-      <div id="ufo-beam"></div>
+      <div id="ufo-beam-wrapper"><div id="ufo-beam"></div></div>
       <img id="ufo-alien" src="/varginha.png" alt="" aria-hidden="true" />
     </div>
   )}
@@ -170,7 +170,7 @@ const breadcrumbJsonLd = {
 
   const overlay = document.getElementById('ufo-overlay');
   const ship    = document.getElementById('ufo-ship');
-  const beam    = document.getElementById('ufo-beam');
+  const beam    = document.getElementById('ufo-beam-wrapper');
   const alien   = document.getElementById('ufo-alien');
 
   let audio = null;
@@ -448,12 +448,23 @@ const breadcrumbJsonLd = {
     transition: left 1.0s cubic-bezier(0.55, 0, 0.75, 0.06);
     left: calc(-500px);
   }
-  :global(#ufo-beam) {
+  :global(#ufo-beam-wrapper) {
     position: absolute;
     top: calc(15vh + 190px);
     left: calc(50vw - 150px);
     width: 300px;
     height: 350px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+    filter: blur(18px);
+  }
+  :global(#ufo-beam-wrapper.visible) {
+    opacity: 1;
+  }
+  :global(#ufo-beam) {
+    width: 100%;
+    height: 100%;
     background: linear-gradient(
       to bottom,
       rgba(120, 255, 120, 0.55) 0%,
@@ -461,13 +472,6 @@ const breadcrumbJsonLd = {
       rgba(60, 220, 60, 0.04) 100%
     );
     clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    pointer-events: none;
-    filter: blur(6px);
-  }
-  :global(#ufo-beam.visible) {
-    opacity: 1;
   }
   :global(#ufo-alien) {
     position: absolute;
