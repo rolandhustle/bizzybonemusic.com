@@ -155,77 +155,116 @@ const breadcrumbJsonLd = {
   </div>
 
   {album.id === 'the-wonder-years' && (
-    <>
-      <div id="ufo-overlay" aria-hidden="true">
-        <div id="ufo-screen-overlay"></div>
-        <div id="ufo-unit">
-          <img id="ufo-svg" src="/ufo.png" alt="UFO" />
-        </div>
-        <div id="ufo-beam"></div>
-        <img id="varginha-img" src="/varginha.png" alt="Varginha" />
-      </div>
-
-      <script>
-        console.log('easter egg loaded');
-        const trigger = document.getElementById('varginha-trigger');
-        console.log('trigger found:', trigger);
-        const overlay = document.getElementById('ufo-overlay');
-        const ufo = document.getElementById('ufo-unit');
-        const beam = document.getElementById('ufo-beam');
-        const screenOverlay = document.getElementById('ufo-screen-overlay');
-        const img = document.getElementById('varginha-img');
-        const sound = new Audio('/ufo_sound.mp3');
-        sound.volume = 0.6;
-
-        if (trigger && overlay) {
-          trigger.addEventListener('click', () => {
-            sound.currentTime = 0;
-            sound.play();
-
-            overlay.classList.add('active');
-            ufo.classList.add('landed');
-
-            setTimeout(() => beam.classList.add('active'), 2100); // 1600ms landing + 500ms pause
-            setTimeout(() => img.classList.add('visible'), 2600);
-
-            setTimeout(() => {
-              img.classList.remove('visible');
-              setTimeout(() => beam.classList.remove('active'), 400);   // 5400ms
-              setTimeout(() => {                                         // 5800ms
-                ufo.classList.add('exiting');
-                setTimeout(() => {
-                  ufo.classList.remove('landed');
-                  ufo.classList.remove('exiting');
-                }, 1300);
-              }, 800);
-              setTimeout(() => overlay.classList.remove('active'), 2000); // 7000ms
-              const fadeOut = setInterval(() => {
-                if (sound.volume > 0.05) {
-                  sound.volume -= 0.05;
-                } else {
-                  sound.volume = 0;
-                  sound.pause();
-                  sound.currentTime = 0;
-                  clearInterval(fadeOut);
-                }
-              }, 100);
-            }, 5000);
-          });
-
-          screenOverlay.addEventListener('click', () => {
-            sound.pause();
-            sound.currentTime = 0;
-            sound.volume = 0.6;
-            img.classList.remove('visible');
-            beam.classList.remove('active');
-            ufo.classList.remove('landed');
-            setTimeout(() => overlay.classList.remove('active'), 400);
-          });
-        }
-      </script>
-    </>
+    <div id="ufo-overlay">
+      <img id="ufo-ship" src="/ufo.png" alt="" aria-hidden="true" />
+      <div id="ufo-beam"></div>
+      <img id="ufo-alien" src="/varginha.png" alt="" aria-hidden="true" />
+    </div>
   )}
 </Base>
+
+<script>
+(function () {
+  const trigger = document.getElementById('varginha-trigger');
+  if (!trigger) return;
+
+  const overlay = document.getElementById('ufo-overlay');
+  const ship    = document.getElementById('ufo-ship');
+  const beam    = document.getElementById('ufo-beam');
+  const alien   = document.getElementById('ufo-alien');
+
+  let audio = null;
+  let animating = false;
+  let holdTimer = null;
+
+  function fadeOutAudio(duration = 1000) {
+    if (!audio) return;
+    const start = audio.volume;
+    const step = 50;
+    const decrement = start / (duration / step);
+    const fade = setInterval(() => {
+      if (audio.volume > decrement) {
+        audio.volume = Math.max(0, audio.volume - decrement);
+      } else {
+        audio.volume = 0;
+        audio.pause();
+        clearInterval(fade);
+      }
+    }, step);
+  }
+
+  function closeAnimation() {
+    if (!animating) return;
+    animating = false;
+    if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
+
+    alien.classList.remove('visible');
+    setTimeout(() => beam.classList.remove('visible'), 400);
+    setTimeout(() => {
+      ship.classList.remove('flying-in');
+      ship.classList.add('flying-out');
+    }, 700);
+    setTimeout(() => overlay.classList.remove('fading-in'), 900);
+    setTimeout(() => {
+      overlay.classList.remove('active');
+      ship.style.transition = 'none';
+      ship.classList.remove('flying-out');
+      void ship.offsetWidth;
+    }, 1600);
+
+    fadeOutAudio(900);
+  }
+
+  function runAnimation() {
+    if (animating) return;
+    animating = true;
+
+    ship.classList.remove('flying-in', 'flying-out');
+    beam.classList.remove('visible');
+    alien.classList.remove('visible');
+    overlay.classList.remove('fading-in');
+    ship.style.transition = 'none';
+    ship.style.left = 'calc(100vw + 200px)';
+    void ship.offsetWidth;
+
+    overlay.classList.add('active');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        overlay.classList.add('fading-in');
+      });
+    });
+
+    try {
+      if (audio) { audio.pause(); audio.currentTime = 0; }
+      audio = new Audio('/ufo_sound.mp3');
+      audio.volume = 0.7;
+      audio.play().catch(() => {});
+    } catch(e) {}
+
+    setTimeout(() => {
+      ship.style.transition = '';
+      ship.style.left = '';
+      ship.classList.add('flying-in');
+    }, 400);
+
+    setTimeout(() => beam.classList.add('visible'), 1900);
+    setTimeout(() => alien.classList.add('visible'), 2600);
+
+    holdTimer = setTimeout(() => {
+      closeAnimation();
+    }, 6600);
+  }
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    runAnimation();
+  });
+
+  overlay.addEventListener('click', () => {
+    closeAnimation();
+  });
+})();
+</script>
 
 <style>
   .breadcrumb {
@@ -373,73 +412,75 @@ const breadcrumbJsonLd = {
     color: #c9a962;
   }
 
+  :global(#varginha-trigger) {
+    cursor: pointer;
+  }
+
   :global(#ufo-overlay) {
     display: none;
     position: fixed;
     inset: 0;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.85);
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 12vh;
-    overflow: hidden;
+    background: rgba(0, 0, 0, 0);
+    z-index: 9999;
+    cursor: pointer;
+    transition: background 0.6s ease;
   }
   :global(#ufo-overlay.active) {
-    display: flex;
+    display: block;
   }
-  :global(#ufo-unit) {
-    display: flex;
-    justify-content: center;
-    transform: translateX(900px);
-    transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 2;
-    width: 100%;
+  :global(#ufo-overlay.fading-in) {
+    background: rgba(0, 0, 0, 0.85);
   }
-  :global(#ufo-unit.landed) {
-    transform: translateX(0);
+  :global(#ufo-ship) {
+    position: absolute;
+    width: 380px;
+    height: auto;
+    top: 15vh;
+    left: calc(100vw + 200px);
+    transition: none;
+    filter: drop-shadow(0 0 20px rgba(100, 255, 100, 0.6));
   }
-  :global(#ufo-unit.exiting) {
-    transform: translateX(-1200px);
-    transition: transform 1.2s cubic-bezier(0.7, 0, 1, 0.3);
+  :global(#ufo-ship.flying-in) {
+    transition: left 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    left: calc(50vw - 190px);
   }
-  :global(#ufo-svg) {
-    width: 400px;
-    z-index: 2;
+  :global(#ufo-ship.flying-out) {
+    transition: left 1.0s cubic-bezier(0.55, 0, 0.75, 0.06);
+    left: calc(-500px);
   }
   :global(#ufo-beam) {
-    width: 400px;
-    height: 0;
-    background: linear-gradient(to bottom, rgba(80, 255, 80, 0.6) 0%, rgba(80, 255, 80, 0.08) 70%, transparent 100%);
-    clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
-    filter: blur(8px);
+    position: absolute;
+    top: calc(15vh + 190px);
+    left: calc(50vw - 150px);
+    width: 300px;
+    height: 350px;
+    background: linear-gradient(
+      to bottom,
+      rgba(120, 255, 120, 0.55) 0%,
+      rgba(80, 255, 80, 0.18) 70%,
+      rgba(60, 220, 60, 0.04) 100%
+    );
+    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
     opacity: 0;
-    transition: height 0.8s ease, opacity 0.8s ease;
-    margin-top: -8px;
-    z-index: 1;
-    flex-shrink: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+    filter: blur(6px);
   }
-  :global(#ufo-beam.active) {
-    height: 380px;
+  :global(#ufo-beam.visible) {
     opacity: 1;
   }
-  :global(#ufo-screen-overlay) {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    cursor: pointer;
-  }
-  :global(#varginha-img) {
+  :global(#ufo-alien) {
     position: absolute;
-    bottom: 18%;
-    width: 280px;
+    width: 260px;
+    height: auto;
+    top: calc(15vh + 330px);
+    left: calc(50vw - 130px);
     opacity: 0;
-    mix-blend-mode: screen;
-    transition: opacity 0.8s ease;
-    z-index: 3;
-    filter: brightness(1.4) contrast(1.2);
+    transition: opacity 1.0s ease;
+    pointer-events: none;
+    filter: drop-shadow(0 0 12px rgba(80, 255, 80, 0.8));
   }
-  :global(#varginha-img.visible) {
+  :global(#ufo-alien.visible) {
     opacity: 1;
   }
 
