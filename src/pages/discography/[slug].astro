@@ -161,6 +161,12 @@ const breadcrumbJsonLd = {
       <img id="ufo-alien" src="/varginha.png" alt="" aria-hidden="true" />
     </div>
   )}
+
+  {album.id === 'mr-ouija' && (
+    <div id="ouija-overlay">
+      <img id="ouija-image" src="/ouija.png" alt="" aria-hidden="true" />
+    </div>
+  )}
 </Base>
 
 <script>
@@ -253,6 +259,97 @@ const breadcrumbJsonLd = {
     holdTimer = setTimeout(() => {
       closeAnimation();
     }, 6600);
+  }
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    runAnimation();
+  });
+
+  overlay.addEventListener('click', () => {
+    closeAnimation();
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const trigger = document.getElementById('ouija-trigger');
+  if (!trigger) return;
+
+  const overlay = document.getElementById('ouija-overlay');
+  const image   = document.getElementById('ouija-image');
+
+  let audio = null;
+  let animating = false;
+  let holdTimer = null;
+
+  function fadeOutAudio(duration = 500) {
+    if (!audio) return;
+    const step = 50;
+    const decrement = audio.volume / (duration / step);
+    const fade = setInterval(() => {
+      if (audio.volume > decrement) {
+        audio.volume = Math.max(0, audio.volume - decrement);
+      } else {
+        audio.volume = 0;
+        audio.pause();
+        clearInterval(fade);
+      }
+    }, step);
+  }
+
+  function closeAnimation() {
+    if (!animating) return;
+    animating = false;
+    if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
+
+    image.classList.remove('visible');
+    setTimeout(() => overlay.classList.remove('fading-in'), 800);
+    setTimeout(() => {
+      overlay.classList.remove('active');
+    }, 1400);
+
+    fadeOutAudio(500);
+  }
+
+  function runAnimation() {
+    if (animating) return;
+    animating = true;
+
+    image.classList.remove('visible');
+    overlay.classList.remove('fading-in');
+
+    overlay.classList.add('active');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        overlay.classList.add('fading-in');
+      });
+    });
+
+    try {
+      if (audio) { audio.pause(); audio.currentTime = 0; }
+      audio = new Audio('/ouija_sound.mp3');
+      audio.volume = 0;
+      audio.play().catch(() => {});
+      const step = 50;
+      const target = 0.7;
+      const increment = target / (500 / step);
+      const fadeIn = setInterval(() => {
+        if (audio.volume < target - increment) {
+          audio.volume = Math.min(target, audio.volume + increment);
+        } else {
+          audio.volume = target;
+          clearInterval(fadeIn);
+        }
+      }, step);
+    } catch(e) {}
+
+    setTimeout(() => image.classList.add('visible'), 400);
+
+    audio.addEventListener('ended', () => {
+      holdTimer = setTimeout(() => closeAnimation(), 500);
+    });
   }
 
   trigger.addEventListener('click', (e) => {
@@ -487,6 +584,36 @@ const breadcrumbJsonLd = {
     filter: drop-shadow(0 0 12px rgba(80, 255, 80, 0.8));
   }
   :global(#ufo-alien.visible) {
+    opacity: 1;
+  }
+
+  :global(#ouija-overlay) {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 9999;
+    cursor: pointer;
+    transition: background 0.6s ease;
+  }
+  :global(#ouija-overlay.active) {
+    display: block;
+  }
+  :global(#ouija-overlay.fading-in) {
+    background: rgba(0, 0, 0, 0.85);
+  }
+  :global(#ouija-image) {
+    position: absolute;
+    width: 500px;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 1.0s ease;
+    pointer-events: none;
+  }
+  :global(#ouija-image.visible) {
     opacity: 1;
   }
 
