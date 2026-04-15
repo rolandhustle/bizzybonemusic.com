@@ -167,6 +167,12 @@ const breadcrumbJsonLd = {
       <img id="ouija-image" src="/ouija.png" alt="" aria-hidden="true" />
     </div>
   )}
+
+  {album.id === 'tha-waste-lands' && (
+    <div id="hopi-overlay">
+      <img id="hopi-image" src="/kokopelli.png" alt="" aria-hidden="true" />
+    </div>
+  )}
 </Base>
 
 <script>
@@ -349,6 +355,106 @@ const breadcrumbJsonLd = {
 
     audio.addEventListener('ended', () => {
       holdTimer = setTimeout(() => closeAnimation(), 500);
+    });
+  }
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    runAnimation();
+  });
+
+  overlay.addEventListener('click', () => {
+    closeAnimation();
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const trigger = document.getElementById('hopi-trigger');
+  if (!trigger) return;
+
+  const overlay = document.getElementById('hopi-overlay');
+  const image   = document.getElementById('hopi-image');
+
+  let audio = null;
+  let animating = false;
+  let walkTimer = null;
+
+  function fadeOutAudio(duration = 500) {
+    if (!audio) return;
+    const step = 50;
+    const decrement = audio.volume / (duration / step);
+    const fade = setInterval(() => {
+      if (audio.volume > decrement) {
+        audio.volume = Math.max(0, audio.volume - decrement);
+      } else {
+        audio.volume = 0;
+        audio.pause();
+        clearInterval(fade);
+      }
+    }, step);
+  }
+
+  function closeAnimation() {
+    if (!animating) return;
+    animating = false;
+    if (walkTimer) { clearTimeout(walkTimer); walkTimer = null; }
+
+    image.style.transition = 'opacity 0.8s ease';
+    image.classList.remove('visible');
+    setTimeout(() => overlay.classList.remove('fading-in'), 800);
+    setTimeout(() => {
+      overlay.classList.remove('active');
+      image.style.transition = 'opacity 0.8s ease, left 18s linear';
+      image.style.left = '-200px';
+    }, 1400);
+
+    fadeOutAudio(500);
+  }
+
+  function runAnimation() {
+    if (animating) return;
+    animating = true;
+
+    image.classList.remove('visible');
+    image.style.transition = 'none';
+    image.style.left = '-200px';
+    overlay.classList.remove('fading-in');
+    void image.offsetWidth;
+
+    overlay.classList.add('active');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        overlay.classList.add('fading-in');
+      });
+    });
+
+    try {
+      if (audio) { audio.pause(); audio.currentTime = 0; }
+      audio = new Audio('/hopi_music.mp3');
+      audio.volume = 0;
+      audio.play().catch(() => {});
+      const step = 50;
+      const target = 0.7;
+      const increment = target / (500 / step);
+      const fadeIn = setInterval(() => {
+        if (audio.volume < target - increment) {
+          audio.volume = Math.min(target, audio.volume + increment);
+        } else {
+          audio.volume = target;
+          clearInterval(fadeIn);
+        }
+      }, step);
+    } catch(e) {}
+
+    setTimeout(() => {
+      image.style.transition = 'opacity 0.8s ease, left 18s linear';
+      image.classList.add('visible');
+    }, 400);
+
+    audio.addEventListener('ended', () => {
+      closeAnimation();
     });
   }
 
@@ -615,6 +721,46 @@ const breadcrumbJsonLd = {
   }
   :global(#ouija-image.visible) {
     opacity: 1;
+  }
+
+  :global(#hopi-overlay) {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 9999;
+    cursor: pointer;
+    transition: background 0.6s ease;
+  }
+  :global(#hopi-overlay.active) {
+    display: block !important;
+  }
+  :global(#hopi-overlay.fading-in) {
+    background: rgba(0, 0, 0, 0.85);
+  }
+  :global(#hopi-image) {
+    position: absolute;
+    width: 600px;
+    height: auto;
+    top: 20%;
+    left: -200px;
+    opacity: 0;
+    transition: opacity 0.8s ease, left 18s linear;
+    pointer-events: none;
+    filter: drop-shadow(0 0 20px rgba(255, 200, 100, 1)) drop-shadow(0 0 40px rgba(255, 150, 50, 0.8)) brightness(2);
+    animation: kokopelli-walk 0.6s ease-in-out infinite;
+  }
+  :global(#hopi-image.visible) {
+    opacity: 1 !important;
+    left: 105vw !important;
+  }
+
+  @keyframes kokopelli-walk {
+    0%   { transform: translateY(0px) rotate(0deg); }
+    25%  { transform: translateY(-15px) rotate(-3deg); }
+    50%  { transform: translateY(0px) rotate(0deg); }
+    75%  { transform: translateY(-15px) rotate(3deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
   }
 
   @media (max-width: 767px) {
