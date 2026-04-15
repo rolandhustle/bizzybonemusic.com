@@ -393,9 +393,9 @@ const breadcrumbJsonLd = {
     const rect = fig.getBoundingClientRect();
     if (rect.width === 0) return;
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
       const p = document.createElement('div');
-      const size = Math.random() * 4 + 1;
+      const size = Math.random() * 6 + 2;
       const x = rect.left + Math.random() * rect.width;
       const y = rect.top + Math.random() * rect.height;
       p.style.cssText = `
@@ -408,7 +408,7 @@ const breadcrumbJsonLd = {
         top: ${y}px;
         z-index: 999999;
         pointer-events: none;
-        transition: transform 1s ease-out, opacity 1s ease-out;
+        transition: transform 1.5s ease-out, opacity 1.5s ease-out;
       `;
       document.getElementById('hopi-overlay').appendChild(p);
 
@@ -417,12 +417,12 @@ const breadcrumbJsonLd = {
         p.style.opacity = '0';
       }, 10);
 
-      setTimeout(() => p.remove(), 1000);
+      setTimeout(() => p.remove(), 1500);
     }
   }
 
   function startParticles() {
-    spawnInterval = setInterval(spawnParticles, 80);
+    spawnInterval = setInterval(spawnParticles, 60);
   }
 
   function stopParticles() {
