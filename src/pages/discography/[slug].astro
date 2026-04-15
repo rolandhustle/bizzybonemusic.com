@@ -170,7 +170,10 @@ const breadcrumbJsonLd = {
 
   {album.id === 'tha-waste-lands' && (
     <div id="hopi-overlay">
-      <img id="hopi-image" src="/kokopelli.png" alt="" aria-hidden="true" />
+      <div id="hopi-wrapper">
+        <img id="hopi-shadow" src="/kokopelli_shadow.png" alt="" aria-hidden="true" />
+        <img id="hopi-figure" src="/kokopelli.gif" alt="" aria-hidden="true" />
+      </div>
     </div>
   )}
 </Base>
@@ -374,12 +377,58 @@ const breadcrumbJsonLd = {
   const trigger = document.getElementById('hopi-trigger');
   if (!trigger) return;
 
-  const overlay = document.getElementById('hopi-overlay');
-  const image   = document.getElementById('hopi-image');
+  const overlay  = document.getElementById('hopi-overlay');
+  const wrapper  = document.getElementById('hopi-wrapper');
 
   let audio = null;
   let animating = false;
-  let walkTimer = null;
+
+  // Particle system
+  let spawnInterval = null;
+
+  function spawnParticles() {
+    const w = document.getElementById('hopi-wrapper');
+    if (!w) return;
+    const fig = document.getElementById('hopi-figure');
+    const rect = fig.getBoundingClientRect();
+    if (rect.width === 0) return;
+
+    for (let i = 0; i < 3; i++) {
+      const p = document.createElement('div');
+      const size = Math.random() * 4 + 1;
+      const x = rect.left + Math.random() * rect.width;
+      const y = rect.top + Math.random() * rect.height;
+      p.style.cssText = `
+        position: fixed;
+        width: ${size}px;
+        height: ${size}px;
+        border-radius: 50%;
+        background: rgba(255, ${180 + Math.floor(Math.random() * 60)}, 50, 0.9);
+        left: ${x}px;
+        top: ${y}px;
+        z-index: 999999;
+        pointer-events: none;
+        transition: transform 1s ease-out, opacity 1s ease-out;
+      `;
+      document.getElementById('hopi-overlay').appendChild(p);
+
+      setTimeout(() => {
+        p.style.transform = `translate(${(Math.random()-0.5)*60}px, ${-40 - Math.random()*60}px)`;
+        p.style.opacity = '0';
+      }, 10);
+
+      setTimeout(() => p.remove(), 1000);
+    }
+  }
+
+  function startParticles() {
+    spawnInterval = setInterval(spawnParticles, 80);
+  }
+
+  function stopParticles() {
+    if (spawnInterval) { clearInterval(spawnInterval); spawnInterval = null; }
+    document.querySelectorAll('.hopi-particle').forEach(p => p.remove());
+  }
 
   function fadeOutAudio(duration = 500) {
     if (!audio) return;
@@ -399,16 +448,14 @@ const breadcrumbJsonLd = {
   function closeAnimation() {
     if (!animating) return;
     animating = false;
-    if (walkTimer) { clearTimeout(walkTimer); walkTimer = null; }
 
-    image.style.transition = 'opacity 0.8s ease';
-    image.classList.remove('visible');
-    setTimeout(() => overlay.classList.remove('fading-in'), 800);
-    setTimeout(() => {
-      overlay.classList.remove('active');
-      image.style.transition = 'opacity 0.8s ease, left 18s linear';
-      image.style.left = '-200px';
-    }, 1400);
+    stopParticles();
+
+    wrapper.style.transition = 'none';
+    wrapper.style.opacity = '0';
+    wrapper.style.left = '-300px';
+    overlay.classList.remove('fading-in');
+    setTimeout(() => overlay.classList.remove('active'), 800);
 
     fadeOutAudio(500);
   }
@@ -417,11 +464,11 @@ const breadcrumbJsonLd = {
     if (animating) return;
     animating = true;
 
-    image.classList.remove('visible');
-    image.style.transition = 'none';
-    image.style.left = '-200px';
+    wrapper.style.transition = 'none';
+    wrapper.style.opacity = '0';
+    wrapper.style.left = '-300px';
     overlay.classList.remove('fading-in');
-    void image.offsetWidth;
+    void wrapper.offsetWidth;
 
     overlay.classList.add('active');
     requestAnimationFrame(() => {
@@ -429,6 +476,8 @@ const breadcrumbJsonLd = {
         overlay.classList.add('fading-in');
       });
     });
+
+    startParticles();
 
     try {
       if (audio) { audio.pause(); audio.currentTime = 0; }
@@ -449,13 +498,12 @@ const breadcrumbJsonLd = {
     } catch(e) {}
 
     setTimeout(() => {
-      image.style.transition = 'opacity 0.8s ease, left 18s linear';
-      image.classList.add('visible');
+      wrapper.style.transition = 'opacity 0.8s ease, left 18s linear';
+      wrapper.style.setProperty('opacity', '1', 'important');
+      wrapper.style.left = '110vw';
     }, 400);
 
-    audio.addEventListener('ended', () => {
-      closeAnimation();
-    });
+    audio.addEventListener('ended', () => closeAnimation());
   }
 
   trigger.addEventListener('click', (e) => {
@@ -463,9 +511,7 @@ const breadcrumbJsonLd = {
     runAnimation();
   });
 
-  overlay.addEventListener('click', () => {
-    closeAnimation();
-  });
+  overlay.addEventListener('click', () => closeAnimation());
 })();
 </script>
 
@@ -724,7 +770,8 @@ const breadcrumbJsonLd = {
   }
 
   :global(#hopi-overlay) {
-    display: none;
+    display: block;
+    visibility: hidden;
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0);
@@ -733,35 +780,40 @@ const breadcrumbJsonLd = {
     transition: background 0.6s ease;
   }
   :global(#hopi-overlay.active) {
-    display: block !important;
+    visibility: visible;
   }
   :global(#hopi-overlay.fading-in) {
     background: rgba(0, 0, 0, 0.85);
   }
-  :global(#hopi-image) {
+  :global(#hopi-wrapper) {
     position: absolute;
-    width: 600px;
-    height: auto;
+    width: 220px;
     top: 20%;
-    left: -200px;
+    left: -300px;
     opacity: 0;
     transition: opacity 0.8s ease, left 18s linear;
     pointer-events: none;
-    filter: drop-shadow(0 0 20px rgba(255, 200, 100, 1)) drop-shadow(0 0 40px rgba(255, 150, 50, 0.8)) brightness(2);
-    animation: kokopelli-walk 0.6s ease-in-out infinite;
+    z-index: 10000;
   }
-  :global(#hopi-image.visible) {
+  :global(#hopi-wrapper.visible) {
     opacity: 1 !important;
-    left: 105vw !important;
+    left: 110vw !important;
+  }
+  :global(#hopi-figure) {
+    position: absolute;
+    width: 220px;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+  :global(#hopi-shadow) {
+    position: absolute;
+    width: 440px;
+    top: -220px;
+    left: -110px;
+    pointer-events: none;
   }
 
-  @keyframes kokopelli-walk {
-    0%   { transform: translateY(0px) rotate(0deg); }
-    25%  { transform: translateY(-15px) rotate(-3deg); }
-    50%  { transform: translateY(0px) rotate(0deg); }
-    75%  { transform: translateY(-15px) rotate(3deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-  }
 
   @media (max-width: 767px) {
     .album-layout {
