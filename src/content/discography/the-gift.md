@@ -6,7 +6,7 @@ label: "AMC Records"
 type: "solo"
 featured: true
 coverImage: "the-gift.webp"
-description: "Considered by many fans to be Bizzy's finest solo work. A deeply confessional album covering childhood trauma, the loss of Eazy-E and spiritual identity. Peaked at #44 on Billboard 200 and #2 on Independent Albums. The track “Fried Day,” which was also featured on the Next Friday soundtrack, is Bizzy Bone’s most-streamed song on Spotify, with over 20 million streams."
+description: "Released March 20, 2001 on independent label AMC American Music, The Gift was Bizzy Bone's first release outside the Ruthless Records system. Produced almost entirely by Darren Vegas across 14 tracks with no guest features and no skits, the album is a deeply confessional statement covering childhood trauma, the loss of Eazy-E, and spiritual identity. Bizzy layers every vocal himself, channeling raw personal honesty over soulful, R&B-tinged production. The album peaked at number 44 on the Billboard 200 and number 2 on Independent Albums. The track “Fried Day,“ also featured on the Next Friday soundtrack, is Bizzy Bone's most-streamed song on Spotify with over 20 million streams. Widely considered his finest solo work."
 quote: "Cleveland, the city we come from, Redrum, And murda mo I can feel some."
 quoteSong: "Never Grow"
 buyLink: "https://www.amazon.com/Gift-Bizzy-Bone/dp/B00005ALH6"
