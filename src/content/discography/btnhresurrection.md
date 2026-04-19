@@ -6,7 +6,7 @@ label: "Ruthless Records"
 type: "btnth"
 featured: true
 coverImage: "btnhresurrection.webp"
-description: "The fourth studio album by Bone Thugs-N-Harmony, debuting at #2 on the Billboard 200 (#1 R&B) and quickly went Platinum. Notably features Flesh-n-Bone on 14 of 15 tracks, his last appearance before a decade-long prison sentence. Production was handled by DJ U-Neek, L.T. Hutton, Jimmy Thomas and Darren Vegas. A darker, more introspective record that marked the group's return after a three-year gap."
+description: "Released on February 29, 2000 through Ruthless Records and distributed by Epic/Sony, BTNHResurrection reunited all five original members of Bone Thugs-N-Harmony for the first time since The Art of War. Most significantly, it marks the only album featuring Flesh-n-Bone as a full participant before his imprisonment in June 2000. Produced by Jimmy JT Thomas, DJ U-Neek, LT Hutton, and Darren Vegas, the album marks a deliberate sonic shift from the group's earlier work. Where DJ U-Neek's classic G-funk production defined their mid-90s peak, BTNHResurrection leans into darker, more atmospheric beats with heavier synths and a more polished, contemporary feel. The trademark rapid-fire flows and doo-wop harmonies remain intact, but the overall mood is more brooding and apocalyptic, reflecting a group navigating internal tensions and a changing musical landscape."
 quote: "Move faster and then ask 'em about the state of men and help the matter, Brace yourself, I can't tell if I'm in peril."
 quoteSong: "The Righteous Ones"
 buyLink: "https://www.amazon.com/dp/B00000DHST"
