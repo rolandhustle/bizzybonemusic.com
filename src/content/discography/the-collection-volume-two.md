@@ -23,7 +23,7 @@ tracks:
   - number: 3
     title: "Thug Luv"
     spotifyId: "45zWmIFDLDRWy5wJlFB10O"
-    producer: DJ U-Neek
+    producer: DJ Uneek
     featuring: 2pac
   - number: 4
     title: "Hook It Up"
@@ -33,11 +33,11 @@ tracks:
   - number: 5
     title: "2 Glocks - U-Neek's Remix"
     spotifyId: "5kPw8f3SWwpBpoBFjmQZC8"
-    producer: DJ U-Neek
+    producer: DJ Uneek
   - number: 6
     title: "Look into My Eyes - Atlantis Remix"
     spotifyId: "4rvj9NX8ggA2x1UY66hhfn"
-    producer: DJ U-Neek
+    producer: DJ Uneek
   - number: 7
     title: "All Good"
     spotifyId: "06nGYA6zSyaQLKjDOshr8o"
@@ -56,7 +56,7 @@ tracks:
   - number: 10
     title: "Change the World - U-Neek's Remix"
     spotifyId: "1q0Evoz1VNiK3Ee2tzUOyr"
-    producer: DJ U-Neek
+    producer: DJ Uneek
     featuring: Big B
   - number: 11
     title: "Can't Give It Up - Rock Remix"
@@ -70,6 +70,6 @@ tracks:
   - number: 13
     title: "Sleepwalkers"
     spotifyId: "32Wp1yCGyIas6Ro9xM7lkJ"
-    producer: DJ U-Neek
+    producer: DJ Uneek
     featuring: Eazy-E
 ---

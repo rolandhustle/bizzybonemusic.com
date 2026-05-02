@@ -21,15 +21,15 @@ tracks:
   - number: 2
     title: "1st of tha Month"
     spotifyId: "1dF5Y2dd7Wm4wZKvVjWBpr"
-    producer: DJ U-Neek
+    producer: DJ Uneek
   - number: 3
     title: "Shoot 'Em Up"
     spotifyId: "2sboRY41vqp4SC8E2yPvTy"
-    producer: DJ U-Neek
+    producer: DJ Uneek
   - number: 4
     title: "Days of Our Livez"
     spotifyId: "6kq8eK7pKvfO5TJ6dLPoPY"
-    producer: DJ U-Neek
+    producer: DJ Uneek
   - number: 5
     title: "Breakdown (Mo Thugs Remix)"
     spotifyId: "5XK0dMccjLSG1oVrEzN6Fz"
@@ -52,15 +52,15 @@ tracks:
   - number: 9
     title: "Crossroad (Original Mix)"
     spotifyId: ""
-    producer: DJ U-Neek
+    producer: DJ Uneek
   - number: 10
     title: "Body Rott"
     spotifyId: "3PgighK4gF2vYaPtjIpzuv"
-    producer: DJ U-Neek
+    producer: DJ Uneek
   - number: 11
     title: "Thuggish Ruggish Bone"
     spotifyId: "7qHAjAL7CpadaZLamuBZRm"
-    producer: DJ U-Neek
+    producer: DJ Uneek
     featuring: Shatasha Williams
   - number: 12
     title: "F--- tha Police (Remix)"
@@ -69,5 +69,5 @@ tracks:
   - number: 13
     title: "P.O.D."
     spotifyId: ""
-    producer: DJ U-Neek
+    producer: DJ Uneek
 ---
