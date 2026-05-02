@@ -1,11 +1,11 @@
 ---
-title: "The Collection: Volume One"
+title: "The Collection: Vol. One"
 slug: "the-collection-volume-one"
 releaseDate: "1998-11-24"
 label: "Ruthless Records"
 type: "btnth"
 coverImage: "collection-vol-1.jpg"
-description: "The first installment of Bone Thugs-N-Harmony's compilation series, released November 24, 1998 on Ruthless Records and distributed by Epic. Spanning hits and rarities from 1994 to 1998 across Creepin on Ah Come Up, E. 1999 Eternal, and The Art of War, it collects fan favorites alongside harder-to-find tracks including their collaborations with Eazy-E, their legendary verse trade with The Notorious B.I.G. on “Notorious Thugs,“ and the original mix of “Crossroads.“ Also features the posthumous Eazy-E collaboration “B.N.K.“ and the previously unreleased “P.O.D.“ The album debuted at number 32 on the Billboard 200 and was certified Platinum by the RIAA."
+description: "The first installment of Bone Thugs-N-Harmony's compilation series, released November 24, 1998 on Ruthless Records and distributed by Epic. Spanning hits and rarities from 1994 to 1998 across Creepin on Ah Come Up, E. 1999 Eternal, and The Art of War, it collects fan favorites alongside harder-to-find tracks including their collaborations with Eazy-E, their legendary verse trade with The Notorious B.I.G. on “Notorious Thugs,“ and the original mix of “Crossroads.“ Also features the posthumous Eazy-E collaboration “B.N.K.“ (a remake of a song by Eazy-E entitled “Black Nigga Killa“) and the previously unreleased “P.O.D.“ The album debuted at number 32 on the Billboard 200 and was certified Platinum by the RIAA."
 quote: "7 A.M. Woke in the mornin', With Hen' and caffeine and green and nicotine, No dough so pop a couple of those, Lil' RIPsta, nigga Mista Clean."
 quoteSong: "Notorious Thugs"
 buyLink: "https://www.discogs.com/master/104789-Bone-Thugs-N-Harmony-The-Collection-Volume-One"
