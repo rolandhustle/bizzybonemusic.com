@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<Base
+  title="Bizzy Bone Kidnapping — Two Years in Oklahoma"
+  description="In 1981, four-year-old Bizzy Bone was kidnapped along with his two sisters and held captive for nearly two years. The story of his abduction, survival, and rescue."
+>
+  <div style="min-height:100vh;background:#0f0f0f;">
+    <Nav />
+
+    <main style="max-width:720px;margin:0 auto;padding:64px 48px 80px;">
+
+      <nav style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.12em;color:#444;margin-bottom:48px;">
+        <a href="/about" style="color:#444;text-decoration:none;border-bottom:0.5px solid #444;">About</a>
+        <span style="margin:0 10px;">→</span>
+        <span style="color:#666;">The Kidnapping</span>
+      </nav>
+
+      <h1 class="page-title">Two Years in Oklahoma</h1>
+
+      <p class="bio">
+        In 1981, four-year-old Bryon McCane II was taken from his Columbus, Ohio home along with his two older sisters by his mother's ex-husband, a former professional football player who shared his name. The man, Byron Carlos "Hurricane" McCane Sr., had played briefly for the Pittsburgh Steelers in 1968 before stints with smaller teams, and was the biological father of Bizzy's two older sisters but not of Bizzy himself. The children were told their mother was dead, given the false surname "Jones," and moved through motels, shelters, vehicles, and apartments across northern Oklahoma. They spent the final roughly eighteen months on the Kaw Indian Reservation in Kaw City, Oklahoma. During those two years, Bizzy endured beatings and sexual abuse at the hands of more than one perpetrator. His abductor, he later said, was intelligent enough to keep them off the radar for so long: "He was more or less working the system. He was a very intelligent man. That's how we went from state to state so long without getting caught."
+      </p>
+
+      <p class="bio">
+        The rescue came in 1983, when a former babysitter living near the reservation recognized Bizzy's photo at the end of a broadcast of the TV movie <em>Adam</em>, a dramatization of the abduction and murder of six-year-old Adam Walsh, watched by an estimated 38 million viewers. She called authorities. The children were brought in for questioning at school. Bizzy, loyal even then, kept giving the false surname. His sister eventually broke. "You can tell," she said. They were returned to their mother, Roseanne Jefferson, who had spent two years searching for them. A common misconception places their rescue through <em>America's Most Wanted</em>, the show John Walsh later created in 1988. It was in fact the <em>Adam</em> film, five years earlier, that brought them home.
+      </p>
+
+      <p class="bio">
+        What followed was no straightforward return to stability. Life after the rescue remained turbulent. Bizzy passed through an abusive second stepfather before his mother left that marriage, then entered foster care in Cleveland with a woman named Beulah Smith, whom he speaks of warmly. He was in the streets by his early teens, became a father at fourteen, and eventually found his way to the group that would become Bone Thugs-N-Harmony. Music, he has said, took root during captivity itself. When his mother finally found them, his sister told her: "Mom, he can really, really sing."
+      </p>
+
+      <p class="bio">
+        Bizzy stayed silent about the abuse throughout Bone Thugs' commercial peak and through the death of Eazy-E. He did not speak publicly until 2002, when he appeared on <em>America's Most Wanted</em> and performed an original tribute song he had written for John Walsh, titled "A.M.W." The song spoke directly to other survivors: "Fellow abductees show me love, and if you think you got a secret tell someone. You don't have to be scared, not like I used to be." He told MTV News that same year: "I remember hiding in vans and hiding under clothes. It was made to be a game, but it wasn't a game. To this day, I still find myself looking around the corner when the police come."
+      </p>
+
+      <p class="bio">
+        Four years before that public disclosure, the truth had already surfaced in his music. His 1998 solo debut <em><a href="/discography/heavenz-movie" class="text-link">Heaven'z Movie</a></em> contained "Nobody Can Stop Me," a verse that named the foster homes, the molestation, and the fractured family without euphemism: "What if I said I was molested? Would you look at me pale? Trippin' on foster homes with a scarred-up soul." It was a confession delivered at double tempo, hidden in plain sight. Later, after the AMW broadcast brought public attention, he addressed the backlash directly on "Gangsta Music," calling out media figures who had mocked his disclosure: "I told the world I was molested and they called me punk." The spiritual urgency running through his entire catalog, the grief, the defiance, the restless searching for meaning, all trace back to those two years in Oklahoma.
+      </p>
+
+      <p class="bio">
+        His time on the Kaw reservation also left a different kind of mark. Bizzy has long cited his Native American heritage, and his connection to Indigenous culture runs through his music in ways that go beyond biography. The track "Hopi Tribe" on his 2023 album <em><a href="/discography/tha-waste-lands" class="text-link">Tha Waste Lands</a></em> reflects on that period directly, drawing on time spent on the reservation not as pure trauma but as a formative encounter with a culture and a landscape that stayed with him.
+      </p>
+
+      <p class="bio">
+        Bizzy documented his childhood in his 2012 autobiography, <em>Inside a Bizzy Mind: Bizzy by Choice, Bone by Blood</em>, co-authored with journalist Jose Martinez and featuring a foreword from John Walsh himself, who wrote: "Bizzy's story tells his inspirational journey and shows just how easy it is to fall, and how tough it is to pick yourself back up." Bizzy has returned to the subject in interviews across two decades, not as a wound to display but as a fact to reckon with. As he told Crime Monthly in 2021: "You've got to let it go or it's going to torment you for the rest of your life. Tell that demon to leave."
+      </p>
+
+    </main>
+  </div>
+</Base>
+
+<style>
+  .page-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0 0 48px;
+    line-height: 1.1;
+  }
+
+  .bio {
+    font-size: 15px;
+    color: #888;
+    line-height: 1.8;
+    margin: 0 0 28px;
+  }
+
+  .bio em {
+    font-style: italic;
+    color: #aaa;
+  }
+
+  .text-link {
+    color: #aaa;
+    font-style: italic;
+    text-decoration: none;
+    border-bottom: 0.5px solid #555;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .text-link:hover {
+    color: #c9a962;
+    border-bottom-color: #c9a962;
+  }
+
+  @media (max-width: 767px) {
+    main {
+      padding: 40px 24px 60px !important;
+    }
+  }
+</style>
