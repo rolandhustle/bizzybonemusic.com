@@ -49,7 +49,17 @@ const albumJsonLd = {
     "birthName": "Bryon Anthony McCane II",
     "birthDate": "1976-09-12",
     "birthPlace": "Cleveland, Ohio"
-  }
+  },
+  "track": data.tracks.map((track) => ({
+    "@type": "MusicRecording",
+    "name": track.title,
+    "position": track.number,
+    ...(track.featuring && { "byArtist": [
+      { "@type": "Person", "name": "Bizzy Bone" },
+      ...track.featuring.split(',').map((f: string) => ({ "@type": "Person", "name": f.trim() }))
+    ]}),
+    ...(track.spotifyId && { "url": `https://open.spotify.com/track/${track.spotifyId}` })
+  }))
 };
 
 const breadcrumbJsonLd = {
